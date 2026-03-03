@@ -34,6 +34,22 @@ class ToDoTableViewController: UITableViewController {
         return cell
     }
     
+    // Gibt zurück, welche Zellen bearbeitet werden können. (hier alle)
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    // Wird eine Zelle nach links gewischt, erscheint ein Delete-Button.
+    // Es wird dafür gesorgt, dass die ToDo-Daten aus dem Array
+    // und die Zeile aus der TableView entfernt werden.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            toDos.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
