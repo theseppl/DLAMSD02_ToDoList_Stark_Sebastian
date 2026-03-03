@@ -5,6 +5,7 @@
 //  Created by Sebastian Stark on 02.03.26.
 //
 
+/*
 import UIKit
 
 class ViewController: UIViewController {
@@ -17,3 +18,4 @@ class ViewController: UIViewController {
 
 }
 
+*/

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Modell eines ToDo-Objektes
 struct ToDo: Equatable {
     
     // Universal Unique ID
@@ -23,4 +24,16 @@ struct ToDo: Equatable {
     static func == (lhs: ToDo, rhs: ToDo) -> Bool {
         return lhs.id == rhs.id
     }
+    
+    // Funktion lädt vorhandene ToDos aus dem Permanentspeicher
+    static func loadToDos() -> [ToDo]? {
+        
+        // Testdaten
+        let toDo1 = ToDo(title: "To-Do One", isComplete: false, dueDate: Date(), notes: "Notes 1")
+        let toDo2 = ToDo(title: "To-Do Two", isComplete: false, dueDate: Date(), notes: "Notes 2")
+        let toDo3 = ToDo(title: "To-Do Three", isComplete: false, dueDate: Date(), notes: "Notes 3")
+        
+        return [toDo1, toDo2, toDo3]
+    }
+    
 }
