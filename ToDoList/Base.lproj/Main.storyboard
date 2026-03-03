@@ -48,28 +48,44 @@
         <scene sceneID="TXh-hM-UKH">
             <objects>
                 <tableViewController id="PWs-T1-CBU" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="YXQ-jN-BVU">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="YXQ-jN-BVU">
                         <rect key="frame" x="0.0" y="0.0" width="402" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="apM-un-GSL">
-                                <rect key="frame" x="0.0" y="50" width="402" height="51"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="apM-un-GSL" id="nP6-uc-42D">
-                                    <rect key="frame" x="0.0" y="0.0" width="402" height="51"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        <sections>
+                            <tableViewSection id="T1N-Mf-l1x">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="apM-un-GSL">
+                                        <rect key="frame" x="0.0" y="18" width="402" height="51"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="apM-un-GSL" id="nP6-uc-42D">
+                                            <rect key="frame" x="0.0" y="0.0" width="402" height="51"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="PWs-T1-CBU" id="bj8-8x-gqh"/>
                             <outlet property="delegate" destination="PWs-T1-CBU" id="ebl-YW-3iP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New To-Do" largeTitleDisplayMode="never" id="CCf-Me-V1E"/>
+                    <navigationItem key="navigationItem" title="New To-Do" largeTitleDisplayMode="never" id="CCf-Me-V1E">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4Kl-9Q-mVK">
+                            <connections>
+                                <segue destination="3kx-74-4yW" kind="unwind" identifier="cancelUnwind" unwindAction="unwindToToDoListWithSegue:" id="Fgd-SV-pgW"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="86k-zN-Yc7">
+                            <connections>
+                                <segue destination="3kx-74-4yW" kind="unwind" identifier="saveUnwind" unwindAction="unwindToToDoListWithSegue:" id="yrM-fc-DcK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ecJ-gp-wCw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="3kx-74-4yW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1072" y="160"/>
         </scene>
