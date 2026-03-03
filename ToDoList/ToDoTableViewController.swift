@@ -60,5 +60,8 @@ class ToDoTableViewController: UITableViewController {
         } else {
             toDos = ToDo.loadSampleToDos()
         }
+        
+        // Erstellt den intelligenten Edit-Button für Anzeige der Delete-Buttons
+        navigationItem.leftBarButtonItem = editButtonItem
     }
 }
