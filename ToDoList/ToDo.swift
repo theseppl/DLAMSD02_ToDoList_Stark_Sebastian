@@ -26,9 +26,14 @@ struct ToDo: Equatable {
     }
     
     // Funktion lädt vorhandene ToDos aus dem Permanentspeicher
+    // und gibt diese an die aufrufende Stelle zurück.
     static func loadToDos() -> [ToDo]? {
+        return nil
+    }
+    
+    // Testdaten
+    static func loadSampleToDos() -> [ToDo] {
         
-        // Testdaten
         let toDo1 = ToDo(title: "To-Do One", isComplete: false, dueDate: Date(), notes: "Notes 1")
         let toDo2 = ToDo(title: "To-Do Two", isComplete: false, dueDate: Date(), notes: "Notes 2")
         let toDo3 = ToDo(title: "To-Do Three", isComplete: false, dueDate: Date(), notes: "Notes 3")
