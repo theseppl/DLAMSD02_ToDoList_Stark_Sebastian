@@ -29,6 +29,11 @@ class ToDoDetailTableViewController: UITableViewController {
         saveButton.isEnabled = shouldEnableSaveButton
     }
     
+    // Sorgt dafür, dass beim Drücken der Enter-Taste auf der UI-Tastatur
+    // die Tastatur ausgeblendet wird.
+    @IBAction func returnPressed(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

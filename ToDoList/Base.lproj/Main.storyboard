@@ -68,6 +68,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
+                                                        <action selector="returnPressed:" destination="PWs-T1-CBU" eventType="primaryActionTriggered" id="cIP-IA-gAE"/>
                                                         <action selector="textEditingChanged:" destination="PWs-T1-CBU" eventType="editingChanged" id="gYj-Qa-eoo"/>
                                                     </connections>
                                                 </textField>
