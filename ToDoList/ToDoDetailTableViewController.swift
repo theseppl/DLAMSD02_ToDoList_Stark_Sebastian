@@ -17,6 +17,8 @@ class ToDoDetailTableViewController: UITableViewController {
     @IBOutlet var dueDateDatePicker: UIDatePicker!
     @IBOutlet var notesTextView: UITextView!
     
+    // MARK: Status des Save-Buttons
+    
     //Ruft bei jeder Änderung des Textfeldes updateSaveButtonState auf.
     @IBAction func textEditingChanged(_ sender: UITextField) {
         updateSaveButtonState()
@@ -29,31 +31,35 @@ class ToDoDetailTableViewController: UITableViewController {
         saveButton.isEnabled = shouldEnableSaveButton
     }
     
+    // MARK: Ausblenden der UI-Tastatur
+    
     // Sorgt dafür, dass beim Drücken der Enter-Taste auf der UI-Tastatur
     // die Tastatur ausgeblendet wird.
     @IBAction func returnPressed(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
     
+    // MARK: viewDidLoad()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateSaveButtonState()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
