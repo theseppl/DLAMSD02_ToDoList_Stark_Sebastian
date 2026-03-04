@@ -47,7 +47,7 @@
         <!--New To-Do-->
         <scene sceneID="TXh-hM-UKH">
             <objects>
-                <tableViewController id="PWs-T1-CBU" sceneMemberID="viewController">
+                <tableViewController id="PWs-T1-CBU" customClass="ToDoDetailTableViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="YXQ-jN-BVU">
                         <rect key="frame" x="0.0" y="0.0" width="402" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -177,6 +177,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dueDateDatePicker" destination="WIF-7I-ax1" id="0nJ-pl-OUj"/>
+                        <outlet property="dueDateLabel" destination="JPC-iJ-qeZ" id="pDY-zp-DCJ"/>
+                        <outlet property="isCompleteButton" destination="Ldz-cc-X5U" id="YTq-Zf-XpH"/>
+                        <outlet property="notesTextView" destination="whj-3I-3nI" id="JEU-3p-0E2"/>
+                        <outlet property="titleTextField" destination="M74-Kf-VTS" id="SYu-V4-zqU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ecJ-gp-wCw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="3kx-74-4yW" userLabel="Exit" sceneMemberID="exit"/>
