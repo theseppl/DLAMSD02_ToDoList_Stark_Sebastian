@@ -8,15 +8,31 @@
 import UIKit
 
 class ToDoDetailTableViewController: UITableViewController {
+    
+    
+    @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var isCompleteButton: UIButton!
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var dueDateDatePicker: UIDatePicker!
     @IBOutlet var notesTextView: UITextView!
     
+    //Ruft bei jeder Änderung des Textfeldes updateSaveButtonState auf.
+    @IBAction func textEditingChanged(_ sender: UITextField) {
+        updateSaveButtonState()
+    }
+    
+    // Setzt den Status des Save-Buttons in Abhängigkeit zum Inhalt des Textfeldes.
+    func updateSaveButtonState() {
+        // shouldEnableSaveButton ist ein Boolean
+        let shouldEnableSaveButton = titleTextField.text?.isEmpty == false
+        saveButton.isEnabled = shouldEnableSaveButton
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateSaveButtonState()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

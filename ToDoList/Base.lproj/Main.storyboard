@@ -67,6 +67,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="textEditingChanged:" destination="PWs-T1-CBU" eventType="editingChanged" id="gYj-Qa-eoo"/>
+                                                    </connections>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ldz-cc-X5U">
                                                     <rect key="frame" x="20" y="8" width="30" height="34"/>
@@ -182,6 +185,7 @@
                         <outlet property="dueDateLabel" destination="JPC-iJ-qeZ" id="pDY-zp-DCJ"/>
                         <outlet property="isCompleteButton" destination="Ldz-cc-X5U" id="YTq-Zf-XpH"/>
                         <outlet property="notesTextView" destination="whj-3I-3nI" id="JEU-3p-0E2"/>
+                        <outlet property="saveButton" destination="86k-zN-Yc7" id="nKy-Th-nvO"/>
                         <outlet property="titleTextField" destination="M74-Kf-VTS" id="SYu-V4-zqU"/>
                     </connections>
                 </tableViewController>
