@@ -39,6 +39,13 @@ class ToDoDetailTableViewController: UITableViewController {
         sender.resignFirstResponder()
     }
     
+    // MARK: Umschalten des "Erledigt-Hakens"
+    
+    // Schaltet den Button um. Setzt bzw. löscht das Häkchen.
+    @IBAction func isCompleteButtonTapped(_ sender: UIButton) {
+        isCompleteButton.isSelected.toggle()
+    }
+    
     // MARK: viewDidLoad()
     
     override func viewDidLoad() {
