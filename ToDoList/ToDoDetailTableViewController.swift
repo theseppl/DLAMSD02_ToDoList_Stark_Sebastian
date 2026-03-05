@@ -46,11 +46,25 @@ class ToDoDetailTableViewController: UITableViewController {
         isCompleteButton.isSelected.toggle()
     }
     
+    // MARK: Datumstextfeld updaten
+    
+    // Formatiert und setzt den Text in das Datumstextfeld.
+    func updateDueDateLabel(date: Date) {
+        dueDateLabel.text = date.formatted(.dateTime.month(.defaultDigits).day().year(.defaultDigits).hour().minute())
+    }
+    
+    // Ruft bei jeder Änderung am DatePicker updateDueDateLabel() auf
+    // und übergibt dabei das neue Datum.
+    @IBAction func datePickerChanged(_ sender: UIDatePicker) {
+        updateDueDateLabel(date: sender.date)
+    }
+    
     // MARK: viewDidLoad()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateSaveButtonState()
+        updateDueDateLabel(date: dueDateDatePicker.date)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

@@ -127,6 +127,9 @@
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="WIF-7I-ax1">
                                                     <rect key="frame" x="20" y="15" width="362" height="178"/>
                                                     <locale key="locale" localeIdentifier="de_DE"/>
+                                                    <connections>
+                                                        <action selector="datePickerChanged:" destination="PWs-T1-CBU" eventType="valueChanged" id="wDY-Mc-3r0"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
