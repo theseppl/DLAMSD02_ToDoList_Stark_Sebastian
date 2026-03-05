@@ -21,6 +21,8 @@ class ToDoDetailTableViewController: UITableViewController {
     let datePickerIndexPath = IndexPath(row: 1, section: 1)
     let notesIndexPath = IndexPath(row: 0, section: 2)
     
+    var toDo: ToDo?
+    
     // MARK: Status des Save-Buttons
     
     //Ruft bei jeder Änderung des Textfeldes updateSaveButtonState auf.
@@ -104,6 +106,24 @@ class ToDoDetailTableViewController: UITableViewController {
             tableView.beginUpdates()
             tableView.endUpdates()
         }
+    }
+    
+    // MARK: Daten für Übergabe vorbereiten
+    
+    // Wenn sichergestellt ist, das die saveUnwind-Segue ausgeführt werden soll,
+    // werden die Werte aus der Eingabe in Konstanten gespeichert und für die Segue vorbereitet.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        guard segue.identifier == "saveUnwind" else { return }
+        
+        let title = titleTextField.text!
+        let isComplete = isCompleteButton.isSelected
+        let dueDate = dueDateDatePicker.date
+        let notes = notesTextView.text
+        
+        // Eine Instanz des Datenmodells.
+        toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
     }
     
     // MARK: viewDidLoad()

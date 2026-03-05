@@ -50,8 +50,22 @@ class ToDoTableViewController: UITableViewController {
         }
     }
     
+    // Methode wird ausgeführt, wenn zur ToDo-List zurückgekehrt wird.
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
         
+        // Sichergehen, dass die übergebene Segue vom Save-Button stammt.
+        // -> Der Save-Button wurde gedrückt.
+        guard segue.identifier == "saveUnwind" else {return}
+        let sourceViewController = segue.source as! ToDoDetailTableViewController
+        
+        // Wenn eine Instanz des Datenmodells im Quell-Viewcontroller der Segue existiert,
+        // wird diese Instanz am Ende des ToDos-Arrays angehängt und in die tableView eingefügt.
+        if let toDo = sourceViewController.toDo {
+            let newIndexPath = IndexPath(row: toDos.count, section: 0)
+            
+            toDos.append(toDo)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
     }
     
     override func viewDidLoad() {
