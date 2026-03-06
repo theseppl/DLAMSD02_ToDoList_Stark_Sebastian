@@ -82,18 +82,18 @@ class ToDoDetailTableViewController: UITableViewController {
             return UITableView.automaticDimension
         }
     }
-   
+    
     /*
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath {
-        case datePickerIndexPath:
-            return 216
-        case notesIndexPath:
-            return 200
-        default:
-            return UITableView.automaticDimension
-        }
-    }
+     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+     switch indexPath {
+     case datePickerIndexPath:
+     return 216
+     case notesIndexPath:
+     return 200
+     default:
+     return UITableView.automaticDimension
+     }
+     }
      */
     
     // Wenn der Index der des DateLabels betätigt wird, wird das Flag umgeschaltet.
@@ -117,20 +117,46 @@ class ToDoDetailTableViewController: UITableViewController {
         
         guard segue.identifier == "saveUnwind" else { return }
         
+        // Holt die Werte aus den UI-Elementen
         let title = titleTextField.text!
         let isComplete = isCompleteButton.isSelected
         let dueDate = dueDateDatePicker.date
         let notes = notesTextView.text
         
-        // Eine Instanz des Datenmodells.
-        toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+        // Wenn toDo bereits existiert, werden die vorhandenen Werte überschrieben.
+        // Ansonsten ein neues toDo-Objekt erstellt.
+        if toDo != nil {
+            toDo?.title = title
+            toDo?.isComplete = isComplete
+            toDo?.dueDate = dueDate
+            toDo?.notes = notes
+        } else {
+            toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+        }
     }
     
     // MARK: viewDidLoad()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let currentDueDate: Date
+        if let toDo = toDo {
+            navigationItem.title = "ToDo"
+            titleTextField.text = toDo.title
+            isCompleteButton.isSelected = toDo.isComplete
+            currentDueDate = toDo.dueDate
+            notesTextView.text = toDo.notes
+        } else {
+            currentDueDate = Date().addingTimeInterval(86400)
+        }
+        
+        dueDateDatePicker.date = currentDueDate
+        updateDueDateLabel(date: currentDueDate)
         updateSaveButtonState()
+        
+        
+        // updateSaveButtonState()
         
         // Setzt das angezeigte Datum im Textfeld per Default 24h in die Zukunft.
         dueDateDatePicker.date = Date().addingTimeInterval(86400)

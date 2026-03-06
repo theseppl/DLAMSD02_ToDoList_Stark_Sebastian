@@ -68,8 +68,31 @@ class ToDoTableViewController: UITableViewController {
         }
     }
     
+    @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailTableViewController? {
+        
+        // Eine Instanz des ToDoDetailTableViewController wird erstellt.
+        let detailController = ToDoDetailTableViewController(coder: coder)
+        
+        // Prüfung, ob der Sender eine Zelle ist.
+        // Wurde Add-Button gedrückt, ist der Sender keine Zelle
+        // -> ein leerer detailController wird zurückgegeben.
+        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
+            // Wenn der Sender der Add-Button ist, gib einen leeren Controller zurück.
+            return detailController
+        }
+        
+        // Wurde eine Zelle ausgewählt wird dem Controller das entsprechende ToDo übergeben
+        // und dieser zurückgegeben.
+        tableView.deselectRow(at: indexPath, animated: true)
+        detailController?.toDo = toDos[indexPath.row]
+        return detailController
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         // Wenn es ToDo-Daten auf dem Festspeicher gibt, werden sie geladen.
         // Wenn nicht, werden die ToDo-Testdaten geladen.
