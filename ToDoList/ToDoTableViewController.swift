@@ -60,11 +60,24 @@ class ToDoTableViewController: UITableViewController {
         
         // Wenn eine Instanz des Datenmodells im Quell-Viewcontroller der Segue existiert,
         // wird diese Instanz am Ende des ToDos-Arrays angehängt und in die tableView eingefügt.
+        // Bzw. bestehende ToDos und tableViews aktualisiert.
         if let toDo = sourceViewController.toDo {
-            let newIndexPath = IndexPath(row: toDos.count, section: 0)
             
-            toDos.append(toDo)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            // Prüft, ob dieses ToDo bereits in der Liste existiert.
+            if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
+                
+                // Existierende ToDos und tableView-Zeilen aktualisieren
+                toDos[indexOfExistingToDo] = toDo
+                tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
+                
+            } else {
+                // Neues toDo am Ende des Array anhängen.
+                let newIndexPath = IndexPath(row: toDos.count, section: 0)
+                toDos.append(toDo)
+                
+                // Neue Zeile in tableView einfügen
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
         }
     }
     
@@ -92,7 +105,7 @@ class ToDoTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         // Wenn es ToDo-Daten auf dem Festspeicher gibt, werden sie geladen.
         // Wenn nicht, werden die ToDo-Testdaten geladen.
