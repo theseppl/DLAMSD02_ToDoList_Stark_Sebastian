@@ -83,19 +83,6 @@ class ToDoDetailTableViewController: UITableViewController {
         }
     }
     
-    /*
-     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-     switch indexPath {
-     case datePickerIndexPath:
-     return 216
-     case notesIndexPath:
-     return 200
-     default:
-     return UITableView.automaticDimension
-     }
-     }
-     */
-    
     // Wenn der Index der des DateLabels betätigt wird, wird das Flag umgeschaltet.
     // Das Label aufgefrischt und die tableView geupdated.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
