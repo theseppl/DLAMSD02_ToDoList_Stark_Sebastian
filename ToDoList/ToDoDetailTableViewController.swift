@@ -141,6 +141,9 @@ class ToDoDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         let currentDueDate: Date
+        
+        // Wenn dem Controller ein vorhandenes ToDo übergeben wird,
+        // werden die Werte in die jeweiligen UI-Elemente gesetzt.
         if let toDo = toDo {
             navigationItem.title = "ToDo"
             titleTextField.text = toDo.title
@@ -148,19 +151,13 @@ class ToDoDetailTableViewController: UITableViewController {
             currentDueDate = toDo.dueDate
             notesTextView.text = toDo.notes
         } else {
+            // Setzt das angezeigte Datum im Textfeld 24h in die Zukunft.
             currentDueDate = Date().addingTimeInterval(86400)
         }
         
         dueDateDatePicker.date = currentDueDate
         updateDueDateLabel(date: currentDueDate)
         updateSaveButtonState()
-        
-        
-        // updateSaveButtonState()
-        
-        // Setzt das angezeigte Datum im Textfeld per Default 24h in die Zukunft.
-        dueDateDatePicker.date = Date().addingTimeInterval(86400)
-        updateDueDateLabel(date: dueDateDatePicker.date)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
