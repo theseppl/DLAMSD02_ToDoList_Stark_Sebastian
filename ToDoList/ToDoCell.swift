@@ -7,9 +7,21 @@
 
 import UIKit
 
+protocol ToDoCellDelegate: AnyObject {
+    func checkMarkTapped(sender: ToDoCell)
+}
+
 class ToDoCell: UITableViewCell {
     @IBOutlet var isCompleteButton: UIButton!
     @IBOutlet var titleLabel: UILabel!
+    weak var delegate: ToDoCellDelegate?
+    
+    // Funktion wird aufgerufen, wenn der CheckMarkButton betätigt wird.
+    // Daduch wird das Delegate-Protokoll informiert, dass der Button betätigt wurde.
+    @IBAction func completeButtonTapped(_ sender: UIButton) {
+        delegate?.checkMarkTapped(sender: self)
+    }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

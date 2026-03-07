@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ToDoTableViewController: UITableViewController {
+class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     var toDos = [ToDo]()
     
     // Gibt die Anzahl an Objekten in der Sektion zurück.
@@ -27,15 +27,18 @@ class ToDoTableViewController: UITableViewController {
         cell.titleLabel?.text = toDo.title
         cell.isCompleteButton.isSelected = toDo.isComplete
         
-        /*
-        // Darstellung der Zelle erzeugen.
-        var content = cell.defaultContentConfiguration()
-        content.text = toDo.title
+        // ToDoTableViewController setzt sich als Cell-Delegate
+        cell.delegate = self
         
-        // Zelle übernimmt erzeugte Darstellung.
-        cell.contentConfiguration = content
+        /*
+         // Darstellung der Zelle erzeugen.
+         var content = cell.defaultContentConfiguration()
+         content.text = toDo.title
          
-        */
+         // Zelle übernimmt erzeugte Darstellung.
+         cell.contentConfiguration = content
+         
+         */
         
         return cell
     }
@@ -107,7 +110,17 @@ class ToDoTableViewController: UITableViewController {
         return detailController
     }
     
-    
+    // Funktion zum Protokoll ToDoCellDelegate
+    // Über den Index des Zelle wird der passende CheckMarkButton gefunden
+    // und umgeschaltet.
+    func checkMarkTapped(sender: ToDoCell) {
+        if let indexPath = tableView.indexPath(for: sender) {
+            var toDo = toDos[indexPath.row]
+            toDo.isComplete.toggle()
+            toDos[indexPath.row] = toDo
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

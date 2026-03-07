@@ -35,6 +35,9 @@
                                             <state key="selected" image="checkmark.circle.fill" catalog="system">
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                             </state>
+                                            <connections>
+                                                <action selector="completeButtonTapped:" destination="HH4-Qb-kp7" eventType="touchUpInside" id="NWP-ZB-DAf"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gi5-rb-Vek">
                                             <rect key="frame" x="56" y="10" width="41.333333333333343" height="31"/>
