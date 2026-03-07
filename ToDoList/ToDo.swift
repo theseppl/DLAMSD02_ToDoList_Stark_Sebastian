@@ -8,16 +8,33 @@
 import Foundation
 
 // Modell eines ToDo-Objektes
-struct ToDo: Equatable {
+struct ToDo: Equatable, Codable {
     
     // Universal Unique ID
-    // Jede Instanz erhält automatisch einen eindeutigen Identifier.
-    let id = UUID()
+    let id: UUID
     
     var title: String
     var isComplete: Bool
     var dueDate: Date
     var notes: String?
+    
+    // Eigener Initializer um UUID und Codable zu ermöglichen.
+    init(title: String, isComplete: Bool, dueDate: Date, notes: String?) {
+        // Jede Instanz erhält einen eindeutigen Identifier.
+        self.id = UUID()
+        self.title = title
+        self.isComplete = isComplete
+        self.dueDate = dueDate
+        self.notes = notes
+    }
+    
+    static let persistenceDirectory = documentsDirectory.appendingPathComponent("Persistence")
+
+    
+    static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
+    static let archiveURL = documentsDirectory.appendingPathComponent("Persistence").appendingPathExtension("plist")
+    }
     
     // Die Funktion sorgt dafür, dass ToDos über den ==-Operator
     // anhand ihrer ID verglichen werden können.
