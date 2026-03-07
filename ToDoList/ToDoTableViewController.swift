@@ -19,8 +19,8 @@ class ToDoTableViewController: UITableViewController {
     // Liefert eine konfigurierte UITableViewCell für die angefragte Zeile zurück.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Holt eine Zelle.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath)
+        // Holt eine Zelle als Instanz der Klasse ToDoCell.
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
         
         // Holt die Daten für die Zelle.
         let toDo = toDos[indexPath.row]
