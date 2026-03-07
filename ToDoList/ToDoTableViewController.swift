@@ -24,13 +24,19 @@ class ToDoTableViewController: UITableViewController {
         
         // Holt die Daten für die Zelle.
         let toDo = toDos[indexPath.row]
+        cell.titleLabel?.text = toDo.title
+        cell.isCompleteButton.isSelected = toDo.isComplete
         
+        /*
         // Darstellung der Zelle erzeugen.
         var content = cell.defaultContentConfiguration()
         content.text = toDo.title
         
         // Zelle übernimmt erzeugte Darstellung.
         cell.contentConfiguration = content
+         
+        */
+        
         return cell
     }
     

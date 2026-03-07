@@ -17,13 +17,44 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="HH4-Qb-kp7" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="402" height="51"/>
+                                <rect key="frame" x="0.0" y="50" width="402" height="52"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HH4-Qb-kp7" id="xeb-0A-R4A">
-                                    <rect key="frame" x="0.0" y="0.0" width="402" height="51"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="402" height="52"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XkG-VI-ppR">
+                                            <rect key="frame" x="20" y="10" width="28" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="X6x-5c-LvS"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="circle" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                            </state>
+                                            <state key="selected" image="checkmark.circle.fill" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                            </state>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gi5-rb-Vek">
+                                            <rect key="frame" x="56" y="10" width="41.333333333333343" height="31"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="XkG-VI-ppR" firstAttribute="leading" secondItem="xeb-0A-R4A" secondAttribute="leading" constant="20" symbolic="YES" id="0Yb-OE-8NT"/>
+                                        <constraint firstItem="XkG-VI-ppR" firstAttribute="top" secondItem="xeb-0A-R4A" secondAttribute="top" constant="10" id="Afi-st-v87"/>
+                                        <constraint firstAttribute="bottom" secondItem="gi5-rb-Vek" secondAttribute="bottom" constant="11" id="jWL-6f-ptq"/>
+                                        <constraint firstAttribute="bottom" secondItem="XkG-VI-ppR" secondAttribute="bottom" constant="11" id="tyA-Y9-CCd"/>
+                                        <constraint firstItem="gi5-rb-Vek" firstAttribute="top" secondItem="xeb-0A-R4A" secondAttribute="top" constant="10" id="uf6-KN-Lpj"/>
+                                        <constraint firstItem="gi5-rb-Vek" firstAttribute="leading" secondItem="XkG-VI-ppR" secondAttribute="trailing" constant="8" symbolic="YES" id="vkS-qe-3Hr"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="isCompleteButton" destination="XkG-VI-ppR" id="6y6-yc-Ohz"/>
+                                    <outlet property="titleLabel" destination="gi5-rb-Vek" id="PaS-Xj-Wep"/>
                                     <segue destination="UcK-Dz-pxQ" kind="presentation" id="6ZW-0u-xOs"/>
                                 </connections>
                             </tableViewCell>
@@ -45,7 +76,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ziA-qI-w0V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-517" y="160"/>
+            <point key="canvasLocation" x="-517.91044776119395" y="159.95423340961096"/>
         </scene>
         <!--New To-Do-->
         <scene sceneID="TXh-hM-UKH">
