@@ -28,7 +28,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         cell.isCompleteButton.isSelected = toDo.isComplete
         
         // ToDoTableViewController setzt sich als Cell-Delegate
-        cell.delegate = self        
+        cell.delegate = self
         return cell
     }
     
@@ -66,13 +66,17 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             // Prüft, ob dieses ToDo bereits in der Liste existiert.
             if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
                 
-                // Existierende ToDos und tableView-Zeilen aktualisieren
+                // Existierende ToDos, tableView-Zeilen und Meldungen aktualisieren
                 toDos[indexOfExistingToDo] = toDo
+                NotificationManager.shared.removeNotification(for: toDo)
+                NotificationManager.shared.scheduleNotification(for: toDo)
                 tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
+                
                 
             } else {
                 // Neues toDo am Ende des Array anhängen.
                 let newIndexPath = IndexPath(row: toDos.count, section: 0)
+                NotificationManager.shared.scheduleNotification(for: toDo)
                 toDos.append(toDo)
                 
                 // Neue Zeile in tableView einfügen
@@ -125,6 +129,8 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         } else {
             toDos = ToDo.loadSampleToDos()
         }
+        
+        NotificationManager.shared.requestAuthorization()
         
         // Erstellt den intelligenten Edit-Button für Anzeige der Delete-Buttons
         navigationItem.leftBarButtonItem = editButtonItem
