@@ -28,18 +28,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         cell.isCompleteButton.isSelected = toDo.isComplete
         
         // ToDoTableViewController setzt sich als Cell-Delegate
-        cell.delegate = self
-        
-        /*
-         // Darstellung der Zelle erzeugen.
-         var content = cell.defaultContentConfiguration()
-         content.text = toDo.title
-         
-         // Zelle übernimmt erzeugte Darstellung.
-         cell.contentConfiguration = content
-         
-         */
-        
+        cell.delegate = self        
         return cell
     }
     
