@@ -28,13 +28,9 @@ struct ToDo: Equatable, Codable {
         self.notes = notes
     }
     
-    static let persistenceDirectory = documentsDirectory.appendingPathComponent("Persistence")
-
-    
+    // Der Pfad für die persistente Speicherung wird definiert.
     static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    
-    static let archiveURL = documentsDirectory.appendingPathComponent("Persistence").appendingPathExtension("plist")
-    }
+    static let archiveURL = documentsDirectory.appendingPathComponent("toDos").appendingPathExtension("plist")
     
     // Die Funktion sorgt dafür, dass ToDos über den ==-Operator
     // anhand ihrer ID verglichen werden können.
@@ -42,10 +38,19 @@ struct ToDo: Equatable, Codable {
         return lhs.id == rhs.id
     }
     
-    // Funktion lädt vorhandene ToDos aus dem Permanentspeicher
+    // Funktion lädt vorhandene ToDos aus dem persitenten Speicher
     // und gibt diese an die aufrufende Stelle zurück.
     static func loadToDos() -> [ToDo]? {
-        return nil
+        guard let codedToDos = try? Data(contentsOf: archiveURL) else {return nil}
+        let propertyListDecoder = PropertyListDecoder()
+        return try? propertyListDecoder.decode(Array<ToDo>.self, from: codedToDos)
+    }
+    
+    // Funktion zum Speichern von ToDos im persistenten Speicher.
+    static func saveToDos(_ toDos: [ToDo]) {
+        let propertyListEncoder = PropertyListEncoder()
+        let codedToDos = try? propertyListEncoder.encode(toDos)
+        try? codedToDos?.write(to: archiveURL, options: .noFileProtection)
     }
     
     // Testdaten
@@ -57,5 +62,4 @@ struct ToDo: Equatable, Codable {
         
         return [toDo1, toDo2, toDo3]
     }
-    
 }
