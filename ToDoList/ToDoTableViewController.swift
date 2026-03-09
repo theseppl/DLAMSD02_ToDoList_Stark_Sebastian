@@ -129,7 +129,6 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Wenn es ToDo-Daten auf dem Festspeicher gibt, werden sie geladen.
         // Wenn nicht, werden die ToDo-Testdaten geladen.
         if let savedToDos = ToDo.loadToDos() {
