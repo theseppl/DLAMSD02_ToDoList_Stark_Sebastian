@@ -68,8 +68,12 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
                 
                 // Existierende ToDos, tableView-Zeilen und Meldungen aktualisieren
                 toDos[indexOfExistingToDo] = toDo
+                
+                // Bestehende Meldungsinformation löschen
                 NotificationManager.shared.removeNotification(for: toDo)
+                // Meldung neu planen
                 NotificationManager.shared.scheduleNotification(for: toDo)
+                
                 tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
                 
                 
