@@ -14,6 +14,7 @@ import UserNotifications
 class NotificationManager {
     
     static let shared = NotificationManager()
+    
     private init() {}
     
     
@@ -38,10 +39,13 @@ class NotificationManager {
         content.body = "Dein ToDo ist fällig: \(toDo.title)"
         content.sound = .default
         
+        let reminderDate = toDo.dueDate.addingTimeInterval(TimeInterval(-toDo.reminderOffsetMinutes * 60))
+        
         // Datum des ToDos → Trigger
         let triggerDate = Calendar.current.dateComponents(
             [.year, .month, .day, .hour, .minute],
-            from: toDo.dueDate
+            from: reminderDate
+           // from: toDo.dueDate
         )
         
         let trigger = UNCalendarNotificationTrigger(

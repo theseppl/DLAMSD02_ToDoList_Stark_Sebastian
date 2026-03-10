@@ -17,15 +17,17 @@ struct ToDo: Equatable, Codable {
     var isComplete: Bool
     var dueDate: Date
     var notes: String?
+    var reminderOffsetMinutes: Int
     
     // Eigener Initializer um UUID und Codable zu ermöglichen.
-    init(title: String, isComplete: Bool, dueDate: Date, notes: String?) {
+    init(title: String, isComplete: Bool, dueDate: Date, notes: String?, reminderOffsetMinutes: Int = 0) {
         // Jede Instanz erhält einen eindeutigen Identifier.
         self.id = UUID()
         self.title = title
         self.isComplete = isComplete
         self.dueDate = dueDate
         self.notes = notes
+        self.reminderOffsetMinutes = reminderOffsetMinutes
     }
     
     // Der Pfad für die persistente Speicherung wird definiert.
