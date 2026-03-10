@@ -15,6 +15,9 @@ class ToDoDetailTableViewController: UITableViewController {
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var dueDateDatePicker: UIDatePicker!
     @IBOutlet var notesTextView: UITextView!
+    @IBOutlet var reminderSegmentedControl: UISegmentedControl!
+    
+    let reminderOffsets = [-1, 0, 15, 30, 60, 120, 1440]   // Minuten vorher
     
     var isDatePickerHidden = true
     let dateLabelIndexPath = IndexPath(row: 0, section: 1)
@@ -109,6 +112,7 @@ class ToDoDetailTableViewController: UITableViewController {
         let isComplete = isCompleteButton.isSelected
         let dueDate = dueDateDatePicker.date
         let notes = notesTextView.text
+        let reminderOffset = reminderOffsets[reminderSegmentedControl.selectedSegmentIndex]
         
         // Wenn toDo bereits existiert, werden die vorhandenen Werte überschrieben.
         // Ansonsten ein neues toDo-Objekt erstellt.
@@ -117,10 +121,17 @@ class ToDoDetailTableViewController: UITableViewController {
             toDo?.isComplete = isComplete
             toDo?.dueDate = dueDate
             toDo?.notes = notes
+            toDo?.reminderOffsetMinutes = reminderOffset
+
         } else {
-            toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+            toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes, reminderOffsetMinutes: reminderOffset)
         }
     }
+    
+    @IBAction func reminderChanged(_ sender: UISegmentedControl) {
+        // Wird aufgerufen, wenn der User ein Segment auswählt
+    }
+
     
     // MARK: viewDidLoad()
     
@@ -137,6 +148,9 @@ class ToDoDetailTableViewController: UITableViewController {
             isCompleteButton.isSelected = toDo.isComplete
             currentDueDate = toDo.dueDate
             notesTextView.text = toDo.notes
+            if let index = reminderOffsets.firstIndex(of: toDo.reminderOffsetMinutes) {
+                reminderSegmentedControl.selectedSegmentIndex = index
+            }
         } else {
             // Setzt das angezeigte Datum im Textfeld 24h in die Zukunft.
             currentDueDate = Date().addingTimeInterval(86400)

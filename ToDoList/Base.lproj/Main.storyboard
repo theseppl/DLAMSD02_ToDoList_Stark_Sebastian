@@ -177,12 +177,49 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="94" id="p44-Gq-fSy">
+                                        <rect key="frame" x="0.0" y="401.33333015441895" width="402" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p44-Gq-fSy" id="2jh-UI-uFG">
+                                            <rect key="frame" x="0.0" y="0.0" width="402" height="94"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xra-LD-nq0" userLabel="reminderSegme">
+                                                    <rect key="frame" x="20" y="48" width="362" height="32"/>
+                                                    <segments>
+                                                        <segment title="Nein"/>
+                                                        <segment title="0 min"/>
+                                                        <segment title="15 min"/>
+                                                        <segment title="30 min"/>
+                                                        <segment title="1 Std"/>
+                                                        <segment title="2 Std"/>
+                                                        <segment title="24 Std"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="reminderChanged:" destination="PWs-T1-CBU" eventType="valueChanged" id="ISh-sx-s44"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Willst du vorher an den Termin erinnert werden?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFs-jx-GCR">
+                                                    <rect key="frame" x="20" y="19.666666666666671" width="364" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xra-LD-nq0" firstAttribute="top" secondItem="DFs-jx-GCR" secondAttribute="bottom" constant="8" symbolic="YES" id="Ibd-H5-QG2"/>
+                                                <constraint firstItem="xra-LD-nq0" firstAttribute="bottom" secondItem="2jh-UI-uFG" secondAttribute="bottomMargin" id="O4E-Nt-uMl"/>
+                                                <constraint firstItem="xra-LD-nq0" firstAttribute="top" secondItem="DFs-jx-GCR" secondAttribute="bottom" constant="8" symbolic="YES" id="ucs-nZ-PsW"/>
+                                                <constraint firstItem="DFs-jx-GCR" firstAttribute="top" secondItem="2jh-UI-uFG" secondAttribute="top" constant="19.670000000000002" id="zCa-T4-c5Z"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Notizen" id="GsS-CR-jV6">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="tc5-3W-t1i">
-                                        <rect key="frame" x="0.0" y="457.33333015441895" width="402" height="200"/>
+                                        <rect key="frame" x="0.0" y="551.33333015441895" width="402" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tc5-3W-t1i" id="0R2-dY-EV6">
                                             <rect key="frame" x="0.0" y="0.0" width="402" height="200"/>
@@ -229,6 +266,7 @@
                         <outlet property="dueDateLabel" destination="JPC-iJ-qeZ" id="pDY-zp-DCJ"/>
                         <outlet property="isCompleteButton" destination="Ldz-cc-X5U" id="YTq-Zf-XpH"/>
                         <outlet property="notesTextView" destination="whj-3I-3nI" id="JEU-3p-0E2"/>
+                        <outlet property="reminderSegmentedControl" destination="xra-LD-nq0" id="he2-Gy-5Fp"/>
                         <outlet property="saveButton" destination="86k-zN-Yc7" id="nKy-Th-nvO"/>
                         <outlet property="titleTextField" destination="M74-Kf-VTS" id="SYu-V4-zqU"/>
                     </connections>
