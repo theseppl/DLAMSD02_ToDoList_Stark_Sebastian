@@ -17,7 +17,7 @@ class ToDoDetailTableViewController: UITableViewController {
     @IBOutlet var notesTextView: UITextView!
     @IBOutlet var reminderSegmentedControl: UISegmentedControl!
     
-    let reminderOffsets = [-1, 0, 15, 30, 60, 120, 1440]   // Minuten vorher
+    let reminderOffsets = [-1, 15, 30, 60, 120, 1440]   // Minuten vorher
     
     var isDatePickerHidden = true
     let dateLabelIndexPath = IndexPath(row: 0, section: 1)
