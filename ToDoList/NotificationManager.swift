@@ -34,6 +34,8 @@ class NotificationManager {
     // MARK: - Erinnerung planen
     func scheduleNotification(for toDo: ToDo) {
         
+        if toDo.reminderOffsetMinutes == -1 { return }
+        
         let content = UNMutableNotificationContent()
         content.title = "Erinnerung"
         content.body = "Dein ToDo ist fällig: \(toDo.title)"
