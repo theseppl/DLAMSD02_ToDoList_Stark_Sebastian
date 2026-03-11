@@ -10,10 +10,13 @@ import UIKit
 
 class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     var toDos = [ToDo]()
+    var filteredToDos = [ToDo]()
+    var isFiltering = false
+
     
     // Gibt die Anzahl an Objekten in der Sektion zurück.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toDos.count
+        return isFiltering ? filteredToDos.count : toDos.count
     }
     
     // Liefert eine konfigurierte UITableViewCell für die angefragte Zeile zurück.
@@ -23,7 +26,8 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
         
         // Holt die Daten für die Zelle.
-        let toDo = toDos[indexPath.row]
+        let toDo = isFiltering ? filteredToDos[indexPath.row] : toDos[indexPath.row]
+     //   let toDo = toDos[indexPath.row]
         cell.titleLabel?.text = toDo.title
         cell.isCompleteButton.isSelected = toDo.isComplete
         
@@ -40,6 +44,8 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     // Wird eine Zelle nach links gewischt, erscheint ein Delete-Button.
     // Es wird dafür gesorgt, dass die ToDo-Daten aus dem Array
     // und die Zeile aus der TableView entfernt werden.
+    
+    /*
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
@@ -49,6 +55,36 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             ToDo.saveToDos(toDos)
         }
     }
+    */
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            // 🔵 FILTER & SORT: korrektes ToDo finden
+            let toDoToDelete = isFiltering ? filteredToDos[indexPath.row] : toDos[indexPath.row]
+            
+            // Aus Hauptliste löschen
+            if let index = toDos.firstIndex(of: toDoToDelete) {
+                toDos.remove(at: index)
+            }
+            
+            // Aus Filterliste löschen
+            if isFiltering {
+                filteredToDos.remove(at: indexPath.row)
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            ToDo.saveToDos(toDos)
+            
+            // 🔵 FILTER & SORT: Filter erneut anwenden
+            if isFiltering {
+                applyFilter(.open) // oder .completed, je nach aktivem Filter
+            }
+        }
+    }
+    
+    
     
     // Methode wird ausgeführt, wenn zur ToDo-List zurückgekehrt wird.
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
@@ -90,6 +126,11 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             }
         }
         ToDo.saveToDos(toDos)
+        
+        // 🔵 FILTER & SORT: Filter erneut anwenden
+        if isFiltering {
+            applyFilter(.open) // oder .completed, je nach aktivem Filter
+        }
     }
     
     @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailTableViewController? {
@@ -122,8 +163,76 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             toDos[indexPath.row] = toDo
             tableView.reloadRows(at: [indexPath], with: .automatic)
             ToDo.saveToDos(toDos)
+            
+            // 🔵 FILTER & SORT: Filter neu anwenden
+            if isFiltering {
+                applyFilter(.open)
+            } else {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
         }
     }
+    
+    // MARK: - 🔵 FILTER-MENÜ EINRICHTEN
+    @IBAction func filterAllTapped(_ sender: UIBarButtonItem) {
+        applyFilter(.all)
+    }
+    
+    @IBAction func filterOpenTapped(_ sender: UIBarButtonItem) {
+        applyFilter(.open)
+    }
+    
+    @IBAction func filterCompletedTapped(_ sender: UIBarButtonItem) {
+        applyFilter(.completed)
+    }
+    
+    
+    /*
+    func setupFilterMenu() {
+        let menu = UIMenu(title: "Filter", children: [
+            UIAction(title: "Alle", image: UIImage(systemName: "tray.full")) { _ in
+                self.applyFilter(.all)
+            },
+            UIAction(title: "Offen", image: UIImage(systemName: "circle")) { _ in
+                self.applyFilter(.open)
+            },
+            UIAction(title: "Erledigt", image: UIImage(systemName: "checkmark.circle")) { _ in
+                self.applyFilter(.completed)
+            }
+        ])
+        
+        let filterButton = UIBarButtonItem(title: "Filter", menu: menu)
+        navigationItem.rightBarButtonItem = filterButton
+    }
+    
+     */
+    
+    // MARK: - 🔵 FILTER-LOGIK
+    enum FilterType {
+        case all
+        case open
+        case completed
+    }
+    
+    func applyFilter(_ type: FilterType) {
+        switch type {
+        case .all:
+            isFiltering = false
+            filteredToDos = []
+            
+        case .open:
+            isFiltering = true
+            filteredToDos = toDos.filter { !$0.isComplete }
+            
+        case .completed:
+            isFiltering = true
+            filteredToDos = toDos.filter { $0.isComplete }
+        }
+        
+        tableView.reloadData()
+    }
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +246,9 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         }
         
         NotificationManager.shared.requestAuthorization()
+        
+        //setupFilterMenu()
+
         
         // Erstellt den intelligenten Edit-Button für Anzeige der Delete-Buttons
         navigationItem.leftBarButtonItem = editButtonItem
