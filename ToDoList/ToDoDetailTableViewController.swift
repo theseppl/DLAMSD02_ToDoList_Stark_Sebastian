@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 class ToDoDetailTableViewController: UITableViewController {
     
@@ -74,6 +75,15 @@ class ToDoDetailTableViewController: UITableViewController {
     // vom Flag die Höhe der Zeile ggf. auf 0 gesetzt.
     // Die Zeile für die Notizen erhält eine feste Höhe von 200.
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        //// >>> TEXTFIELD-ZELLHÖHE HINZUGEFÜGT <<<
+        if indexPath.section == 0 && indexPath.row == 0 {
+            return 50   // Höhe der TextField-Zelle
+        }
+        //// >>> ENDE TEXTFIELD-ZELLHÖHE <<<
+        
+        
+        
         switch indexPath {
         case datePickerIndexPath where isDatePickerHidden == true:
             return 0
