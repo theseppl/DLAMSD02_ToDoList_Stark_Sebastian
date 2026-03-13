@@ -19,6 +19,12 @@ struct ToDo: Equatable, Codable {
     var notes: String?
     var reminderOffsetMinutes: Int
     
+    // Variablen für Location
+    var locationName: String?
+    var latitude: Double?
+    var longitude: Double?
+
+    
     // Eigener Initializer um UUID und Codable zu ermöglichen.
     init(title: String, isComplete: Bool, dueDate: Date, notes: String?, reminderOffsetMinutes: Int = 0) {
         // Jede Instanz erhält einen eindeutigen Identifier.

@@ -16,9 +16,15 @@ class ToDoDetailTableViewController: UITableViewController {
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var dueDateDatePicker: UIDatePicker!
     @IBOutlet var notesTextView: UITextView!
-    @IBOutlet var reminderSegmentedControl: UISegmentedControl!
     
+    @IBOutlet var reminderSegmentedControl: UISegmentedControl!
     let reminderOffsets = [-1, 15, 30, 60, 120, 1440]   // Minuten vorher
+    
+    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
+    let geocoder = CLGeocoder()
+    
+    
     
     var isDatePickerHidden = true
     let dateLabelIndexPath = IndexPath(row: 0, section: 1)
@@ -115,6 +121,7 @@ class ToDoDetailTableViewController: UITableViewController {
         let dueDate = dueDateDatePicker.date
         let notes = notesTextView.text
         let reminderOffset = reminderOffsets[reminderSegmentedControl.selectedSegmentIndex]
+        let location = locationTextField.text
         
         // Wenn toDo bereits existiert, werden die vorhandenen Werte überschrieben.
         // Ansonsten ein neues toDo-Objekt erstellt.
@@ -124,15 +131,59 @@ class ToDoDetailTableViewController: UITableViewController {
             toDo?.dueDate = dueDate
             toDo?.notes = notes
             toDo?.reminderOffsetMinutes = reminderOffset
+            toDo?.locationName = location
 
         } else {
             toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes, reminderOffsetMinutes: reminderOffset)
+            toDo?.locationName = location
         }
     }
     
     @IBAction func reminderChanged(_ sender: UISegmentedControl) {
         // Wird aufgerufen, wenn der User ein Segment auswählt
     }
+    
+    
+    // Action für das Textfeld der Map-View
+    @IBAction func locationEditingChanged(_ sender: UITextField) {
+        guard let text = sender.text, !text.isEmpty else { return }
+        updateMapForLocation(text)
+    }
+    
+    func updateMapForLocation(_ address: String) {
+        geocoder.geocodeAddressString(address) { placemarks, error in
+            guard let placemark = placemarks?.first,
+                  let location = placemark.location else { return }
+
+            let coordinate = location.coordinate
+
+            // Karte zentrieren
+            let region = MKCoordinateRegion(
+                center: coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            )
+            self.mapView.setRegion(region, animated: true)
+
+            // Pin setzen
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = address
+            self.mapView.addAnnotation(annotation)
+
+            // Werte speichern
+            self.toDo?.latitude = coordinate.latitude
+            self.toDo?.longitude = coordinate.longitude
+            self.toDo?.locationName = address
+        }
+    }
+
+    
+    
+    
+    
+    
+    
 
     
     // MARK: viewDidLoad()
@@ -141,6 +192,7 @@ class ToDoDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         let currentDueDate: Date
+
         
         // Wenn dem Controller ein vorhandenes ToDo übergeben wird,
         // werden die Werte in die jeweiligen UI-Elemente gesetzt.
@@ -150,9 +202,27 @@ class ToDoDetailTableViewController: UITableViewController {
             isCompleteButton.isSelected = toDo.isComplete
             currentDueDate = toDo.dueDate
             notesTextView.text = toDo.notes
+            locationTextField.text = toDo.locationName
+            
             if let index = reminderOffsets.firstIndex(of: toDo.reminderOffsetMinutes) {
                 reminderSegmentedControl.selectedSegmentIndex = index
             }
+            
+            if let lat = toDo.latitude, let lon = toDo.longitude {
+                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                    let region = MKCoordinateRegion(
+                        center: coordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                    )
+                    mapView.setRegion(region, animated: false)
+
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    annotation.title = toDo.locationName
+                    mapView.addAnnotation(annotation)
+                }
+            
+            
         } else {
             // Setzt das angezeigte Datum im Textfeld 24h in die Zukunft.
             currentDueDate = Date().addingTimeInterval(86400)

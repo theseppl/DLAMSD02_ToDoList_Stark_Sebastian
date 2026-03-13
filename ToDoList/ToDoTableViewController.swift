@@ -12,7 +12,6 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     var toDos = [ToDo]()
     var filteredToDos = [ToDo]()
     var isFiltering = false
-
     
     // Gibt die Anzahl an Objekten in der Sektion zurück.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,18 +43,6 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     // Wird eine Zelle nach links gewischt, erscheint ein Delete-Button.
     // Es wird dafür gesorgt, dass die ToDo-Daten aus dem Array
     // und die Zeile aus der TableView entfernt werden.
-    
-    /*
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            toDos.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            // Persistente Speicherung.
-            ToDo.saveToDos(toDos)
-        }
-    }
-    */
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -186,27 +173,6 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         applyFilter(.completed)
     }
     
-    
-    /*
-    func setupFilterMenu() {
-        let menu = UIMenu(title: "Filter", children: [
-            UIAction(title: "Alle", image: UIImage(systemName: "tray.full")) { _ in
-                self.applyFilter(.all)
-            },
-            UIAction(title: "Offen", image: UIImage(systemName: "circle")) { _ in
-                self.applyFilter(.open)
-            },
-            UIAction(title: "Erledigt", image: UIImage(systemName: "checkmark.circle")) { _ in
-                self.applyFilter(.completed)
-            }
-        ])
-        
-        let filterButton = UIBarButtonItem(title: "Filter", menu: menu)
-        navigationItem.rightBarButtonItem = filterButton
-    }
-    
-     */
-    
     // MARK: - 🔵 FILTER-LOGIK
     enum FilterType {
         case all
@@ -232,8 +198,6 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         tableView.reloadData()
     }
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -246,9 +210,6 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         }
         
         NotificationManager.shared.requestAuthorization()
-        
-        //setupFilterMenu()
-
         
         // Erstellt den intelligenten Edit-Button für Anzeige der Delete-Buttons
         navigationItem.leftBarButtonItem = editButtonItem
