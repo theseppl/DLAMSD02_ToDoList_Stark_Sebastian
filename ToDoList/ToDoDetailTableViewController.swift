@@ -74,15 +74,7 @@ class ToDoDetailTableViewController: UITableViewController {
     // Wenn der übergebene Index der des DatePickers ist, wird in Abhängigkeit
     // vom Flag die Höhe der Zeile ggf. auf 0 gesetzt.
     // Die Zeile für die Notizen erhält eine feste Höhe von 200.
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        //// >>> TEXTFIELD-ZELLHÖHE HINZUGEFÜGT <<<
-        if indexPath.section == 0 && indexPath.row == 0 {
-            return 50   // Höhe der TextField-Zelle
-        }
-        //// >>> ENDE TEXTFIELD-ZELLHÖHE <<<
-        
-        
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {    
         
         switch indexPath {
         case datePickerIndexPath where isDatePickerHidden == true:
