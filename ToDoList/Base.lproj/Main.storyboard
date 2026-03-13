@@ -103,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="-517.91044776119395" y="159.95423340961096"/>
         </scene>
-        <!--New To-Do-->
+        <!--Neue Aufgabe-->
         <scene sceneID="TXh-hM-UKH">
             <objects>
                 <tableViewController id="PWs-T1-CBU" customClass="ToDoDetailTableViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -301,7 +301,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="362" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="whj-3I-3nI">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="whj-3I-3nI">
                                                     <rect key="frame" x="20" y="0.0" width="322" height="200"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <color key="textColor" systemColor="labelColor"/>
@@ -325,13 +325,13 @@
                             <outlet property="delegate" destination="PWs-T1-CBU" id="ebl-YW-3iP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New To-Do" largeTitleDisplayMode="never" id="CCf-Me-V1E">
+                    <navigationItem key="navigationItem" title="Neue Aufgabe" largeTitleDisplayMode="never" id="CCf-Me-V1E">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4Kl-9Q-mVK">
                             <connections>
                                 <segue destination="3kx-74-4yW" kind="unwind" identifier="cancelUnwind" unwindAction="unwindToToDoListWithSegue:" id="Fgd-SV-pgW"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="86k-zN-Yc7">
+                        <barButtonItem key="rightBarButtonItem" title="Speichern" id="86k-zN-Yc7">
                             <connections>
                                 <segue destination="3kx-74-4yW" kind="unwind" identifier="saveUnwind" unwindAction="unwindToToDoListWithSegue:" id="yrM-fc-DcK"/>
                             </connections>
