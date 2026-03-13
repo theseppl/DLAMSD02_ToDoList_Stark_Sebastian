@@ -198,6 +198,13 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         tableView.reloadData()
     }
     
+    @objc func toggleEditMode() {
+        setEditing(!isEditing, animated: true)
+
+        // Titel dynamisch anpassen
+        navigationItem.leftBarButtonItem?.title = isEditing ? "Fertig" : "Bearbeiten"
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -212,6 +219,12 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         NotificationManager.shared.requestAuthorization()
         
         // Erstellt den intelligenten Edit-Button für Anzeige der Delete-Buttons
-        navigationItem.leftBarButtonItem = editButtonItem
+        let customEditButton = UIBarButtonItem(
+            title: "Bearbeiten",
+            style: .plain,
+            target: self,
+            action: #selector(toggleEditMode)
+        )
+        navigationItem.leftBarButtonItem = customEditButton
     }
 }

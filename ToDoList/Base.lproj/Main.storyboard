@@ -73,17 +73,17 @@
                         <centerItemGroups>
                             <barButtonItemGroup customizationDisposition="fixed" id="Jw0-pt-UCP">
                                 <barButtonItems>
-                                    <barButtonItem title="Alle" id="Cvr-wd-CLP">
+                                    <barButtonItem title="Alle anzeigen" id="Cvr-wd-CLP">
                                         <connections>
                                             <action selector="filterAllTapped:" destination="X48-7k-kG6" id="Xus-uE-YcZ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Offen" id="2GF-2t-0Jp">
+                                    <barButtonItem title="Offene anzeigen" id="2GF-2t-0Jp">
                                         <connections>
                                             <action selector="filterOpenTapped:" destination="X48-7k-kG6" id="SlJ-wq-XsB"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Erledigt" id="oPr-Hm-Bjj">
+                                    <barButtonItem title="Erledigte anzeigen" id="oPr-Hm-Bjj">
                                         <connections>
                                             <action selector="filterCompletedTapped:" destination="X48-7k-kG6" id="Psh-iM-hC0"/>
                                         </connections>
