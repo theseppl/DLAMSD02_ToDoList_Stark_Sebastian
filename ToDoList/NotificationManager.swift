@@ -38,7 +38,7 @@ class NotificationManager {
         
         let content = UNMutableNotificationContent()
         content.title = "Erinnerung"
-        content.body = "Dein ToDo ist fällig: \(toDo.title)"
+        content.body = "Eine Aufgabe ist fällig: \(toDo.title)"
         content.sound = .default
         
         let reminderDate = toDo.dueDate.addingTimeInterval(TimeInterval(-toDo.reminderOffsetMinutes * 60))
@@ -75,5 +75,3 @@ class NotificationManager {
             .removePendingNotificationRequests(withIdentifiers: [toDo.id.uuidString])
     }
 }
-
-
