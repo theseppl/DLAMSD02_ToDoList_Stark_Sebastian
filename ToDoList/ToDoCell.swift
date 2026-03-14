@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 // MARK: - Protokoll ToDoCellDelegate
 
 // Ein Protokoll, das die Zelle verwendet, um Ereignisse (z. B. Button-Taps)
@@ -16,6 +17,7 @@ protocol ToDoCellDelegate: AnyObject {
     // Wird aufgerufen, wenn der Checkmark-Button in der Zelle getippt wurde.
     func checkMarkTapped(sender: ToDoCell)
 }
+
 
 // MARK: - Klasse ToDoCell
 

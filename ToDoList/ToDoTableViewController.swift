@@ -8,12 +8,27 @@
 import Foundation
 import UIKit
 
+// Hauptliste aller ToDos.
+// Zeigt offene, erledigte und gefilterte Aufgaben an.
 class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
+    
+    
+    // MARK: - Eigenschaften
+    
+    // Hauptliste aller ToDos.
     var toDos = [ToDo]()
+    
+    // Gefilterte Liste (z. B. nur offene oder nur erledigte).
     var filteredToDos = [ToDo]()
+    
+    // Gibt an, ob aktuell ein Filter aktiv ist.
     var isFiltering = false
     
-    // Gibt die Anzahl an Objekten in der Sektion zurück.
+    
+    // MARK: - TableView Datenquelle
+    
+    // Anzahl der Zeilen in der Tabelle.
+    // Wenn gefiltert wird → gefilterte Liste, sonst komplette Liste.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isFiltering ? filteredToDos.count : toDos.count
     }
@@ -21,19 +36,24 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     // Liefert eine konfigurierte UITableViewCell für die angefragte Zeile zurück.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Holt eine Zelle als Instanz der Klasse ToDoCell.
+        // Zelle vom Typ ToDoCell abrufen.
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
         
-        // Holt die Daten für die Zelle.
+        // Passendes ToDo auswählen (gefiltert oder ungefiltert).
         let toDo = isFiltering ? filteredToDos[indexPath.row] : toDos[indexPath.row]
-     //   let toDo = toDos[indexPath.row]
+        
+        // UI der Zelle setzen.
         cell.titleLabel?.text = toDo.title
         cell.isCompleteButton.isSelected = toDo.isComplete
         
-        // ToDoTableViewController setzt sich als Cell-Delegate
+        // Der Controller wird als Delegate gesetzt,
+        // damit er auf Button-Taps in der Zelle reagieren kann.
         cell.delegate = self
         return cell
     }
+    
+    
+    // MARK: - Löschen von ToDos
     
     // Gibt zurück, welche Zellen bearbeitet werden können. (hier alle)
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -41,14 +61,12 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     }
     
     // Wird eine Zelle nach links gewischt, erscheint ein Delete-Button.
-    // Es wird dafür gesorgt, dass die ToDo-Daten aus dem Array
-    // und die Zeile aus der TableView entfernt werden.
-    
+    // Es wird dafür gesorgt, dass die ToDo-Daten aus dem Array und die Zeile aus der TableView entfernt werden.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             
-            // 🔵 FILTER & SORT: korrektes ToDo finden
+            // Das korrekte ToDo ermitteln (gefiltert oder ungefiltert).
             let toDoToDelete = isFiltering ? filteredToDos[indexPath.row] : toDos[indexPath.row]
             
             // Aus Hauptliste löschen
@@ -61,10 +79,13 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
                 filteredToDos.remove(at: indexPath.row)
             }
             
+            // Zeile aus Tabelle entfernen.
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            // Änderungen speichern.
             ToDo.saveToDos(toDos)
             
-            // 🔵 FILTER & SORT: Filter erneut anwenden
+            // Filter erneut anwenden, damit die Ansicht konsistent bleibt.
             if isFiltering {
                 applyFilter(.open) // oder .completed, je nach aktivem Filter
             }
@@ -72,8 +93,9 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     }
     
     
+    // MARK: - Rückkehr aus dem Detail-Controller
     
-    // Methode wird ausgeführt, wenn zur ToDo-List zurückgekehrt wird.
+    // Wird ausgeführt, wenn der Nutzer im Detail-Controller auf „Speichern“ tippt.
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
         
         // Sichergehen, dass die übergebene Segue vom Save-Button stammt.
@@ -89,47 +111,57 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             // Prüft, ob dieses ToDo bereits in der Liste existiert.
             if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
                 
-                // Existierende ToDos, tableView-Zeilen und Meldungen aktualisieren
+                // Existierendes ToDo aktualisieren
                 toDos[indexOfExistingToDo] = toDo
                 
-                // Bestehende Mitteilung löschen
+                // Bestehende Mitteilung löschen und neue planen
                 NotificationManager.shared.removeNotification(for: toDo)
                 // Mitteilung neu planen
                 if toDo.reminderOffsetMinutes != -1 {
                     NotificationManager.shared.scheduleNotification(for: toDo)
                 }
                 
+                // Zeile aktualisieren.
                 tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
                 
-                
+                // Wenn ToDo noch nicht in Liste existiert.
             } else {
                 // Neues toDo am Ende des Array anhängen.
                 let newIndexPath = IndexPath(row: toDos.count, section: 0)
-                NotificationManager.shared.scheduleNotification(for: toDo)
                 toDos.append(toDo)
                 
-                // Neue Zeile in tableView einfügen
+                // Erinnerung planen.
+                NotificationManager.shared.scheduleNotification(for: toDo)
+                
+                // Neue Zeile einfügen
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
+        
+        // Änderungen speichern.
         ToDo.saveToDos(toDos)
         
-        // 🔵 FILTER & SORT: Filter erneut anwenden
+        // Filter aktualisieren.
         if isFiltering {
             applyFilter(.open) // oder .completed, je nach aktivem Filter
         }
     }
     
+    
+    // MARK: - Navigation zu Detail-Controller
+    
+    // Wird aufgerufen, wenn eine Zelle oder der Add-Button gedrückt wird.
     @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailTableViewController? {
         
         // Eine Instanz des ToDoDetailTableViewController wird erstellt.
         let detailController = ToDoDetailTableViewController(coder: coder)
         
-        // Prüfung, ob der Sender eine Zelle ist.
-        // Wurde Add-Button gedrückt, ist der Sender keine Zelle
-        // -> ein leerer detailController wird zurückgegeben.
-        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
-            // Wenn der Sender der Add-Button ist, gib einen leeren Controller zurück.
+        // Prüfung, ob der Sender eine Zelle ist. -> ToDo bearbeiten
+        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell)
+                
+        // Wenn der Sender der Add-Button ist, gib einen leeren Controller zurück.
+        // Es wird ein leerer detailController zurückgegeben.
+        else {
             return detailController
         }
         
@@ -140,18 +172,24 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         return detailController
     }
     
+    
+    // MARK: - Delegate: Checkmark in Zelle getippt
+    
     // Funktion zum Protokoll ToDoCellDelegate
-    // Über den Index des Zelle wird der passende CheckMarkButton gefunden
-    // und umgeschaltet.
+    // Wird aufgerufen, wenn der Nutzer in einer Zelle den Haken antippt.
+    // Über den Index des Zelle wird der passende CheckMarkButton gefunden und umgeschaltet.
     func checkMarkTapped(sender: ToDoCell) {
         if let indexPath = tableView.indexPath(for: sender) {
+            
+            // ToDo erledigt umschalten.
             var toDo = toDos[indexPath.row]
             toDo.isComplete.toggle()
             toDos[indexPath.row] = toDo
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            
+            // Speichern.
             ToDo.saveToDos(toDos)
             
-            // 🔵 FILTER & SORT: Filter neu anwenden
+            // Filter aktualisieren.
             if isFiltering {
                 applyFilter(.open)
             } else {
@@ -160,65 +198,88 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         }
     }
     
-    // MARK: - 🔵 FILTER-MENÜ EINRICHTEN
+    
+    // MARK: - Filter-Menü
+    
+    // Filter: Alle Aufgaben
     @IBAction func filterAllTapped(_ sender: UIBarButtonItem) {
         applyFilter(.all)
     }
     
+    // Filter: Offene Aufgaben
     @IBAction func filterOpenTapped(_ sender: UIBarButtonItem) {
         applyFilter(.open)
     }
     
+    // Filter: Abgeschlossene Aufgaben
     @IBAction func filterCompletedTapped(_ sender: UIBarButtonItem) {
         applyFilter(.completed)
     }
     
-    // MARK: - 🔵 FILTER-LOGIK
+    
+    // MARK: - Filter-Logik
+    
     enum FilterType {
         case all
         case open
         case completed
     }
     
+    // Wendet den ausgewählten Filter an.
     func applyFilter(_ type: FilterType) {
         switch type {
+            
+        // Es wird nicht gefiltert.
+        // Das Array filteredToDos bleibt leer.
         case .all:
             isFiltering = false
             filteredToDos = []
-            
+        
+        // Es wird gefiltert.
+        // Das Array filteredToDos erhält offene Aufgaben.
         case .open:
             isFiltering = true
             filteredToDos = toDos.filter { !$0.isComplete }
-            
+        
+        // Es wird gefiltert.
+        // Das Array filteredToDos erhält abgeschlossene Aufgaben.
         case .completed:
             isFiltering = true
             filteredToDos = toDos.filter { $0.isComplete }
         }
         
+        // Die Tabellensicht wird aufgefrischt.
         tableView.reloadData()
     }
     
+    
+    // MARK: - Bearbeiten-Button
+    
+    // Schaltet den Bearbeitungsmodus ein/aus.
     @objc func toggleEditMode() {
         setEditing(!isEditing, animated: true)
-
+        
         // Titel dynamisch anpassen
         navigationItem.leftBarButtonItem?.title = isEditing ? "Fertig" : "Bearbeiten"
     }
-
+    
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Wenn es ToDo-Daten auf dem Festspeicher gibt, werden sie geladen.
-        // Wenn nicht, werden die ToDo-Testdaten geladen.
+        // ToDos laden (persistente Daten oder Beispiel-Daten).
         if let savedToDos = ToDo.loadToDos() {
             toDos = savedToDos
         } else {
             toDos = ToDo.loadSampleToDos()
         }
         
+        // Berechtigung für Benachrichtigungen anfragen.
         NotificationManager.shared.requestAuthorization()
         
-        // Erstellt den intelligenten Edit-Button für Anzeige der Delete-Buttons
+        // Benutzerdefinierter Bearbeiten-Button.
         let customEditButton = UIBarButtonItem(
             title: "Bearbeiten",
             style: .plain,
