@@ -12,7 +12,6 @@ import Foundation
 // Codable: ermöglicht einfaches Speichern/Laden als Property List (plist)
 struct ToDo: Equatable, Codable {
     
-    
     // MARK: - Eigenschaften
     
     // Universal Unique ID
