@@ -12,12 +12,11 @@ import UIKit
 
 // Ein Protokoll, das die Zelle verwendet, um Ereignisse (z. B. Button-Taps)
 // an den übergeordneten ViewController weiterzugeben.
-// Dadurch bleibt die Zelle dumm und wiederverwendbar.
+// Dadurch bleibt die Zelle "dumm" und wiederverwendbar.
 protocol ToDoCellDelegate: AnyObject {
     // Wird aufgerufen, wenn der Checkmark-Button in der Zelle getippt wurde.
     func checkMarkTapped(sender: ToDoCell)
 }
-
 
 // MARK: - Klasse ToDoCell
 
@@ -30,12 +29,12 @@ class ToDoCell: UITableViewCell {
     // Label, das den Titel des ToDos anzeigt.
     @IBOutlet var titleLabel: UILabel!
     
-    // Delegate, das über Interaktionen in der Zelle informiert wird.
-    // weak verhindert Retain Cycles zwischen Zelle und ViewController.
+    // Delegate, der über Interaktionen in der Zelle informiert wird.
+    // weak verhindert Retain Cycles (unnötiges Festhalten) zwischen Zelle und ViewController.
     weak var delegate: ToDoCellDelegate?
     
     // Wird aufgerufen, wenn der Nutzer auf den Checkmark-Button tippt.
-    // Die Zelle selbst ändert NICHT den Zustand — sie meldet nur das Ereignis.
+    // Die Zelle selbst ändert NICHT den Zustand, sie meldet nur das Ereignis.
     // Der ViewController entscheidet dann, was passieren soll.
     @IBAction func completeButtonTapped(_ sender: UIButton) {
         delegate?.checkMarkTapped(sender: self)

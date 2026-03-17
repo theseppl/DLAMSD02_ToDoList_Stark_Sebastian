@@ -8,9 +8,6 @@
 import Foundation
 import UserNotifications
 
-import Foundation
-import UserNotifications
-
 // Zuständig für Benachrichtigungen (z.B. 15 Minuten vorher...).
 class NotificationManager {
     
